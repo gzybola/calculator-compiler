@@ -12,7 +12,7 @@ instance Show Calculation where
         show Add = "add"
         show Sub = "sub"
         show Mul = "mul"
-        show Div = "div" 
+        show Div = "div"
 
 initialCS = (0, Map.empty)
 
@@ -26,7 +26,7 @@ compileExp_ name exp1 exp2 = do
         cmd2 <- compileExp exp2
         (countR, _) <- get
         put (next countR, vars)
-        return intercalate "\n" [cmd1, cmd1, (intercalate " " [show name
+        return $ intercalate " " [cmd1, cmd1, (intercalate " " [show name
                                              , "i32"
                                              , show countL
                                              , show countR])]         
@@ -69,7 +69,7 @@ compileStmt (SAss (Ident id) exp) = do
                                  , show (next countVar)
                                  , "=" 
                                  , res] 
-
+compileStmt (SExp exp) = compileExp exp
 compile :: Program -> State CompilerState LLVMProgram
 compile (Prog stmts) = do
         prgs <- forM stmts compileStmt
