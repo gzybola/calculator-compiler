@@ -1,13 +1,20 @@
-module LLVM where
+module Main where
 
 import Control.Monad.State
 import Data.Map as Map 
 import qualified Data.Text as T
 import Data.List 
+import System.Environment ( getArgs )
+import System.FilePath.Posix ( replaceExtension )
+
 import AbsInstant
+import ErrM
+import LexInstant
+import ParInstant
 
 type CompilerState = (Integer, Map String Integer)
 type LLVMProgram = String
+
 instance Show Calculation where
         show Add = "add"
         show Sub = "sub"
@@ -15,9 +22,21 @@ instance Show Calculation where
         show Div = "div"
 
 initialCS = (0, Map.empty)
+identation = "    "
 
 next :: Integer -> Integer
 next a = a + 1
+
+line :: [String] -> String
+line strgs = concat [ identation
+                    , (intercalate " " strgs)
+                    ,"\n"]
+
+tmpRegister :: Integer -> String
+tmpRegister int = "%_" ++ (show int)
+
+varRegister :: String -> Integer -> String
+varRegister var n = "%" ++ var ++ "." ++ (show n)
 
 compileExp_ :: Calculation -> Exp -> Exp -> State CompilerState LLVMProgram
 compileExp_ name exp1 exp2 = do
@@ -26,10 +45,18 @@ compileExp_ name exp1 exp2 = do
         cmd2 <- compileExp exp2
         (countR, _) <- get
         put (next countR, vars)
-        return $ intercalate " " [cmd1, cmd1, (intercalate " " [show name
-                                             , "i32"
-                                             , show countL
-                                             , show countR])]         
+        return $ concat [cmd1, cmd2, line [ tmpRegister $ next countR
+                                          , "="
+                                          , show name
+                                          , "i32"
+                                          , tmpRegister countL
+                                          , ","
+                                          , tmpRegister countR]]         
+
+ass :: String -> String -> String
+ass var val = line [ var
+                   , "= add i32 0,"
+                   , val]
 
 compileExp :: Exp -> State CompilerState LLVMProgram
 compileExp (ExpAdd exp1 exp2) = compileExp_ Add exp1 exp2
@@ -40,22 +67,13 @@ compileExp (ExpDiv exp1 exp2) = compileExp_ Div exp1 exp2
 compileExp (ExpLit int) = do
         (count, vars) <- get
         put (next count, vars)
-        return $ intercalate " " ["%_"
-                                 , (show $ next count)
-                                 ,  " = %add i32 0, "
-                                 ,  show int
-                                 , "\n"]
+        return $ ass (tmpRegister $ next count) $ show int
 
 compileExp (ExpVar (Ident var)) = do
         (count, vars) <- get
         let (Just countVar) = Map.lookup var vars 
         put (next count, vars)
-        return $ intercalate " " ["%_"
-                                 , var
-                                 , show $ next count
-                                 , " = %add i32 0, "
-                                 , var] 
-
+        return $ ass (tmpRegister $ next count) $ varRegister var countVar 
 
 compileStmt :: Stmt -> State CompilerState LLVMProgram
 compileStmt (SAss (Ident id) exp) = do
@@ -63,23 +81,35 @@ compileStmt (SAss (Ident id) exp) = do
         (countExp, vars) <- get
         let countVar = Map.findWithDefault 0 id vars
         put (countExp, Map.insert id (next countVar) vars) 
-        return $ intercalate " " [res
-                                 , "%_"
-                                 , id
-                                 , show (next countVar)
-                                 , "=" 
-                                 , res] 
-compileStmt (SExp exp) = compileExp exp
+        return $ res ++ (ass (varRegister id $ next countVar) $ tmpRegister countExp) 
+
+compileStmt (SExp exp) = do
+        res <- compileExp exp
+        (countExp, _) <- get
+        return $ res ++ (line ["call void @printInt(i32 " ++ (tmpRegister countExp) ++ ")"])
+
 compile :: Program -> State CompilerState LLVMProgram
 compile (Prog stmts) = do
         prgs <- forM stmts compileStmt
-        return $ concat prgs
+        return $ first ++ (concat prgs) ++ end
 
---declare void @printInt(i32)
---define i32 @main() {
---        %i1 = add i32 2, 2
---        call void @printInt(i32 %i1)
----        ret i32 2
----}
+first = "declare void @printInt(i32)\n\
+        \define i32 @main() {\n"
+end = "    ret i32 0\n\
+      \}\n"
+
+type ParseFun a = [Token] -> Err a
+run :: ParseFun Program -> String -> FilePath -> IO ()
+run p s file = do
+           let (Ok tree) = p $ myLexer s 
+           let (llvm, _) = runState (compile tree) initialCS
+           writeFile file llvm
+
+main :: IO ()
+main = do
+  args  <- getArgs
+  input <- readFile $ head args
+  let new_file = replaceExtension (head args) "ll"
+  run pProgram input new_file
 
  

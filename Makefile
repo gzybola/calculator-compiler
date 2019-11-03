@@ -1,7 +1,8 @@
 all:
 	happy -gca ParInstant.y
 	alex -g LexInstant.x
-	ghc --make Main.hs -o Main
+	ghc --make LLVM.hs -o insc_llvm
+	ghc --make JVM.hs -o insc_jvm
 
 clean:
 	-rm -f *.log *.aux *.hi *.o *.dvi
