@@ -1,4 +1,4 @@
-module Main where
+module LLVM where
 
 import Control.Monad.State
 import Data.Map as Map 
@@ -19,7 +19,7 @@ instance Show Calculation where
         show Add = "add"
         show Sub = "sub"
         show Mul = "mul"
-        show Div = "div"
+        show Div = "sdiv"
 
 initialCS = (0, Map.empty)
 identation = "    "
@@ -98,18 +98,3 @@ first = "declare void @printInt(i32)\n\
 end = "    ret i32 0\n\
       \}\n"
 
-type ParseFun a = [Token] -> Err a
-run :: ParseFun Program -> String -> FilePath -> IO ()
-run p s file = do
-           let (Ok tree) = p $ myLexer s 
-           let (llvm, _) = runState (compile tree) initialCS
-           writeFile file llvm
-
-main :: IO ()
-main = do
-  args  <- getArgs
-  input <- readFile $ head args
-  let new_file = replaceExtension (head args) "ll"
-  run pProgram input new_file
-
- 
