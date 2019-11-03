@@ -9,9 +9,9 @@ import ErrM
 import LexInstant
 import ParInstant
 
-type JVMProgram    = String
+type JVMProgram = String
 type CompilerState = Map String Integer
-type DepthStmt     = DepthExp 
+type DepthStmt = DepthExp 
 data DepthExp = None | DExp { count :: Integer
                             , left :: DepthExp
                             , right :: DepthExp
@@ -136,10 +136,6 @@ start     = ".class public Main\n\
             \.super java/lang/Object\n\
             \.method public static main([Ljava/lang/String;)V\n"
 
-
-type ParseFun a = [Token] -> Err a
-
-myLLexer = myLexer
 
 run p s file = do
            let (Ok tree) = p $ myLexer s 
