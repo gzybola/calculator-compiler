@@ -29,8 +29,8 @@ iconst :: Integer -> String
 iconst n
   | n == -1              = "iconst_m1"
   | (n >= 0 && n <= 5)   = "iconst_" ++ (show n)
-  | otherwise            = "bipush " ++ (show n)
-
+  | n <= 127             = "bipush " ++ (show n)
+  | otherwise            = "ldc "    ++ (show n)
 iload :: Integer -> String
 iload n 
   | (n >= 0 && n <= 3) = "iload_" ++ (show n)
