@@ -1,7 +1,7 @@
 module JVM where
 import Control.Monad.State
 import Data.Map as Map
-import System.Process
+
 import AbsInstant
 
 type JVMProgram = String

@@ -1,0 +1,43 @@
+.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇..ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑
+
+────────────────kompilacja──────────────
+
+  make
+
+─────────────────katalogi─────────────────
+
+├── lib
+│   ├── jasmin.jar
+│   └── Runtime.class
+├── Makefile
+└── src
+    ├── AbsInstant.hs
+    ├── DocInstant.txt
+    ├── ErrM.hs
+    ├── Instant.cf
+    ├── JVM.hs
+    ├── JVMTest.hs
+    ├── LexInstant.hs
+    ├── LexInstant.x
+    ├── LLVM.hs
+    ├── LLVMTest.hs
+    ├── ParInstant.hs
+    ├── ParInstant.y
+    ├── PrintInstant.hs
+    └── SkelInstant.hs
+
+
+─────────────────moduły─────────────────
+  - Data.Map               mapa wykorzystywana do trzymania liczników zmiennych
+  - Data.List              lista potrzebna do manipulacji napisami
+  - Control.Monad.State    stan kompilatora
+  - System.Environment     pobieranie argumentów
+  - System.FilePath.Posix  manipulacja ścieżką\nazwą pliku
+  - System.Process         wykonywanie komand linii poleceń z poziomu kodu
+
+
+Parser został wygenerowany dzięki narzędziu bnfc 
+oraz gramatyki zdefiniowanej w treści zadania (Instant.cf).
+
+ 
+.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇..ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑

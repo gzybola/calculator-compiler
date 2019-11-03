@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-unused-binds -fno-warn-missing-signatures #-}
 {-# LANGUAGE CPP,MagicHash #-}
-{-# LINE 3 "LexInstant.x" #-}
+{-# LINE 3 "src/LexInstant.x" #-}
 
 {-# OPTIONS -fno-warn-incomplete-patterns #-}
 {-# OPTIONS_GHC -w #-}
@@ -61,7 +61,7 @@ alex_actions = array (0 :: Int, 3)
   , (0,alex_action_3)
   ]
 
-{-# LINE 37 "LexInstant.x" #-}
+{-# LINE 37 "src/LexInstant.x" #-}
 
 
 tok :: (Posn -> String -> Token) -> (Posn -> String -> Token)
