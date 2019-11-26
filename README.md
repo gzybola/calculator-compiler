@@ -4,28 +4,6 @@
 
   make
 
-───────────────────────────────────katalogi─────────────────────────────────
-
-├── lib
-│   ├── jasmin.jar
-│   └── Runtime.class
-├── Makefile
-└── src
-    ├── AbsInstant.hs
-    ├── DocInstant.txt
-    ├── ErrM.hs
-    ├── Instant.cf
-    ├── JVM.hs
-    ├── JVMTest.hs
-    ├── LexInstant.hs
-    ├── LexInstant.x
-    ├── LLVM.hs
-    ├── LLVMTest.hs
-    ├── ParInstant.hs
-    ├── ParInstant.y
-    ├── PrintInstant.hs
-    └── SkelInstant.hs
-
 
 ───────────────────────────────────moduły───────────────────────────────────
   - Data.Map               mapa wykorzystywana do trzymania liczników zmiennych
