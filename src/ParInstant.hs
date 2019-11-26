@@ -14,7 +14,7 @@ import qualified GHC.Exts as Happy_GHC_Exts
 import Control.Applicative(Applicative(..))
 import Control.Monad (ap)
 
--- parser produced by Happy Version 1.19.9
+-- parser produced by Happy Version 1.19.11
 
 newtype HappyAbsSyn  = HappyAbsSyn HappyAny
 #if __GLASGOW_HASKELL__ >= 607
@@ -22,64 +22,74 @@ type HappyAny = Happy_GHC_Exts.Any
 #else
 type HappyAny = forall a . a
 #endif
+newtype HappyWrap11 = HappyWrap11 (Ident)
 happyIn11 :: (Ident) -> (HappyAbsSyn )
-happyIn11 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn11 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap11 x)
 {-# INLINE happyIn11 #-}
-happyOut11 :: (HappyAbsSyn ) -> (Ident)
+happyOut11 :: (HappyAbsSyn ) -> HappyWrap11
 happyOut11 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut11 #-}
+newtype HappyWrap12 = HappyWrap12 (Integer)
 happyIn12 :: (Integer) -> (HappyAbsSyn )
-happyIn12 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn12 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap12 x)
 {-# INLINE happyIn12 #-}
-happyOut12 :: (HappyAbsSyn ) -> (Integer)
+happyOut12 :: (HappyAbsSyn ) -> HappyWrap12
 happyOut12 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut12 #-}
+newtype HappyWrap13 = HappyWrap13 (Program)
 happyIn13 :: (Program) -> (HappyAbsSyn )
-happyIn13 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn13 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap13 x)
 {-# INLINE happyIn13 #-}
-happyOut13 :: (HappyAbsSyn ) -> (Program)
+happyOut13 :: (HappyAbsSyn ) -> HappyWrap13
 happyOut13 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut13 #-}
+newtype HappyWrap14 = HappyWrap14 (Stmt)
 happyIn14 :: (Stmt) -> (HappyAbsSyn )
-happyIn14 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn14 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap14 x)
 {-# INLINE happyIn14 #-}
-happyOut14 :: (HappyAbsSyn ) -> (Stmt)
+happyOut14 :: (HappyAbsSyn ) -> HappyWrap14
 happyOut14 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut14 #-}
+newtype HappyWrap15 = HappyWrap15 ([Stmt])
 happyIn15 :: ([Stmt]) -> (HappyAbsSyn )
-happyIn15 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn15 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap15 x)
 {-# INLINE happyIn15 #-}
-happyOut15 :: (HappyAbsSyn ) -> ([Stmt])
+happyOut15 :: (HappyAbsSyn ) -> HappyWrap15
 happyOut15 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut15 #-}
+newtype HappyWrap16 = HappyWrap16 (Exp)
 happyIn16 :: (Exp) -> (HappyAbsSyn )
-happyIn16 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn16 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap16 x)
 {-# INLINE happyIn16 #-}
-happyOut16 :: (HappyAbsSyn ) -> (Exp)
+happyOut16 :: (HappyAbsSyn ) -> HappyWrap16
 happyOut16 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut16 #-}
+newtype HappyWrap17 = HappyWrap17 (Exp)
 happyIn17 :: (Exp) -> (HappyAbsSyn )
-happyIn17 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn17 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap17 x)
 {-# INLINE happyIn17 #-}
-happyOut17 :: (HappyAbsSyn ) -> (Exp)
+happyOut17 :: (HappyAbsSyn ) -> HappyWrap17
 happyOut17 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut17 #-}
+newtype HappyWrap18 = HappyWrap18 (Exp)
 happyIn18 :: (Exp) -> (HappyAbsSyn )
-happyIn18 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn18 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap18 x)
 {-# INLINE happyIn18 #-}
-happyOut18 :: (HappyAbsSyn ) -> (Exp)
+happyOut18 :: (HappyAbsSyn ) -> HappyWrap18
 happyOut18 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut18 #-}
+newtype HappyWrap19 = HappyWrap19 (Exp)
 happyIn19 :: (Exp) -> (HappyAbsSyn )
-happyIn19 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn19 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap19 x)
 {-# INLINE happyIn19 #-}
-happyOut19 :: (HappyAbsSyn ) -> (Exp)
+happyOut19 :: (HappyAbsSyn ) -> HappyWrap19
 happyOut19 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut19 #-}
+newtype HappyWrap20 = HappyWrap20 (Exp)
 happyIn20 :: (Exp) -> (HappyAbsSyn )
-happyIn20 x = Happy_GHC_Exts.unsafeCoerce# x
+happyIn20 x = Happy_GHC_Exts.unsafeCoerce# (HappyWrap20 x)
 {-# INLINE happyIn20 #-}
-happyOut20 :: (HappyAbsSyn ) -> (Exp)
+happyOut20 :: (HappyAbsSyn ) -> HappyWrap20
 happyOut20 x = Happy_GHC_Exts.unsafeCoerce# x
 {-# INLINE happyOut20 #-}
 happyInTok :: (Token) -> (HappyAbsSyn )
@@ -165,7 +175,7 @@ happyReduction_9 happy_x_1
 
 happyReduce_10 = happySpecReduce_1  2# happyReduction_10
 happyReduction_10 happy_x_1
-	 =  case happyOut15 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut15 happy_x_1 of { (HappyWrap15 happy_var_1) -> 
 	happyIn13
 		 (AbsInstant.Prog happy_var_1
 	)}
@@ -174,15 +184,15 @@ happyReduce_11 = happySpecReduce_3  3# happyReduction_11
 happyReduction_11 happy_x_3
 	happy_x_2
 	happy_x_1
-	 =  case happyOut11 happy_x_1 of { happy_var_1 -> 
-	case happyOut20 happy_x_3 of { happy_var_3 -> 
+	 =  case happyOut11 happy_x_1 of { (HappyWrap11 happy_var_1) -> 
+	case happyOut20 happy_x_3 of { (HappyWrap20 happy_var_3) -> 
 	happyIn14
 		 (AbsInstant.SAss happy_var_1 happy_var_3
 	)}}
 
 happyReduce_12 = happySpecReduce_1  3# happyReduction_12
 happyReduction_12 happy_x_1
-	 =  case happyOut20 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut20 happy_x_1 of { (HappyWrap20 happy_var_1) -> 
 	happyIn14
 		 (AbsInstant.SExp happy_var_1
 	)}
@@ -194,7 +204,7 @@ happyReduction_13  =  happyIn15
 
 happyReduce_14 = happySpecReduce_1  4# happyReduction_14
 happyReduction_14 happy_x_1
-	 =  case happyOut14 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut14 happy_x_1 of { (HappyWrap14 happy_var_1) -> 
 	happyIn15
 		 ((:[]) happy_var_1
 	)}
@@ -203,8 +213,8 @@ happyReduce_15 = happySpecReduce_3  4# happyReduction_15
 happyReduction_15 happy_x_3
 	happy_x_2
 	happy_x_1
-	 =  case happyOut14 happy_x_1 of { happy_var_1 -> 
-	case happyOut15 happy_x_3 of { happy_var_3 -> 
+	 =  case happyOut14 happy_x_1 of { (HappyWrap14 happy_var_1) -> 
+	case happyOut15 happy_x_3 of { (HappyWrap15 happy_var_3) -> 
 	happyIn15
 		 ((:) happy_var_1 happy_var_3
 	)}}
@@ -213,15 +223,15 @@ happyReduce_16 = happySpecReduce_3  5# happyReduction_16
 happyReduction_16 happy_x_3
 	happy_x_2
 	happy_x_1
-	 =  case happyOut17 happy_x_1 of { happy_var_1 -> 
-	case happyOut16 happy_x_3 of { happy_var_3 -> 
+	 =  case happyOut17 happy_x_1 of { (HappyWrap17 happy_var_1) -> 
+	case happyOut16 happy_x_3 of { (HappyWrap16 happy_var_3) -> 
 	happyIn16
 		 (AbsInstant.ExpAdd happy_var_1 happy_var_3
 	)}}
 
 happyReduce_17 = happySpecReduce_1  5# happyReduction_17
 happyReduction_17 happy_x_1
-	 =  case happyOut17 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut17 happy_x_1 of { (HappyWrap17 happy_var_1) -> 
 	happyIn16
 		 (happy_var_1
 	)}
@@ -230,15 +240,15 @@ happyReduce_18 = happySpecReduce_3  6# happyReduction_18
 happyReduction_18 happy_x_3
 	happy_x_2
 	happy_x_1
-	 =  case happyOut17 happy_x_1 of { happy_var_1 -> 
-	case happyOut18 happy_x_3 of { happy_var_3 -> 
+	 =  case happyOut17 happy_x_1 of { (HappyWrap17 happy_var_1) -> 
+	case happyOut18 happy_x_3 of { (HappyWrap18 happy_var_3) -> 
 	happyIn17
 		 (AbsInstant.ExpSub happy_var_1 happy_var_3
 	)}}
 
 happyReduce_19 = happySpecReduce_1  6# happyReduction_19
 happyReduction_19 happy_x_1
-	 =  case happyOut18 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut18 happy_x_1 of { (HappyWrap18 happy_var_1) -> 
 	happyIn17
 		 (happy_var_1
 	)}
@@ -247,8 +257,8 @@ happyReduce_20 = happySpecReduce_3  7# happyReduction_20
 happyReduction_20 happy_x_3
 	happy_x_2
 	happy_x_1
-	 =  case happyOut18 happy_x_1 of { happy_var_1 -> 
-	case happyOut19 happy_x_3 of { happy_var_3 -> 
+	 =  case happyOut18 happy_x_1 of { (HappyWrap18 happy_var_1) -> 
+	case happyOut19 happy_x_3 of { (HappyWrap19 happy_var_3) -> 
 	happyIn18
 		 (AbsInstant.ExpMul happy_var_1 happy_var_3
 	)}}
@@ -257,29 +267,29 @@ happyReduce_21 = happySpecReduce_3  7# happyReduction_21
 happyReduction_21 happy_x_3
 	happy_x_2
 	happy_x_1
-	 =  case happyOut18 happy_x_1 of { happy_var_1 -> 
-	case happyOut19 happy_x_3 of { happy_var_3 -> 
+	 =  case happyOut18 happy_x_1 of { (HappyWrap18 happy_var_1) -> 
+	case happyOut19 happy_x_3 of { (HappyWrap19 happy_var_3) -> 
 	happyIn18
 		 (AbsInstant.ExpDiv happy_var_1 happy_var_3
 	)}}
 
 happyReduce_22 = happySpecReduce_1  7# happyReduction_22
 happyReduction_22 happy_x_1
-	 =  case happyOut19 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut19 happy_x_1 of { (HappyWrap19 happy_var_1) -> 
 	happyIn18
 		 (happy_var_1
 	)}
 
 happyReduce_23 = happySpecReduce_1  8# happyReduction_23
 happyReduction_23 happy_x_1
-	 =  case happyOut12 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut12 happy_x_1 of { (HappyWrap12 happy_var_1) -> 
 	happyIn19
 		 (AbsInstant.ExpLit happy_var_1
 	)}
 
 happyReduce_24 = happySpecReduce_1  8# happyReduction_24
 happyReduction_24 happy_x_1
-	 =  case happyOut11 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut11 happy_x_1 of { (HappyWrap11 happy_var_1) -> 
 	happyIn19
 		 (AbsInstant.ExpVar happy_var_1
 	)}
@@ -288,14 +298,14 @@ happyReduce_25 = happySpecReduce_3  8# happyReduction_25
 happyReduction_25 happy_x_3
 	happy_x_2
 	happy_x_1
-	 =  case happyOut20 happy_x_2 of { happy_var_2 -> 
+	 =  case happyOut20 happy_x_2 of { (HappyWrap20 happy_var_2) -> 
 	happyIn19
 		 (happy_var_2
 	)}
 
 happyReduce_26 = happySpecReduce_1  9# happyReduction_26
 happyReduction_26 happy_x_1
-	 =  case happyOut16 happy_x_1 of { happy_var_1 -> 
+	 =  case happyOut16 happy_x_1 of { (HappyWrap16 happy_var_1) -> 
 	happyIn20
 		 (happy_var_1
 	)}
@@ -332,28 +342,28 @@ happyReturn1 = \a tks -> (returnM) a
 happyError' :: () => ([(Token)], [String]) -> Err a
 happyError' = (\(tokens, _) -> happyError tokens)
 pProgram tks = happySomeParser where
- happySomeParser = happyThen (happyParse 0# tks) (\x -> happyReturn (happyOut13 x))
+ happySomeParser = happyThen (happyParse 0# tks) (\x -> happyReturn (let {(HappyWrap13 x') = happyOut13 x} in x'))
 
 pStmt tks = happySomeParser where
- happySomeParser = happyThen (happyParse 1# tks) (\x -> happyReturn (happyOut14 x))
+ happySomeParser = happyThen (happyParse 1# tks) (\x -> happyReturn (let {(HappyWrap14 x') = happyOut14 x} in x'))
 
 pListStmt tks = happySomeParser where
- happySomeParser = happyThen (happyParse 2# tks) (\x -> happyReturn (happyOut15 x))
+ happySomeParser = happyThen (happyParse 2# tks) (\x -> happyReturn (let {(HappyWrap15 x') = happyOut15 x} in x'))
 
 pExp1 tks = happySomeParser where
- happySomeParser = happyThen (happyParse 3# tks) (\x -> happyReturn (happyOut16 x))
+ happySomeParser = happyThen (happyParse 3# tks) (\x -> happyReturn (let {(HappyWrap16 x') = happyOut16 x} in x'))
 
 pExp2 tks = happySomeParser where
- happySomeParser = happyThen (happyParse 4# tks) (\x -> happyReturn (happyOut17 x))
+ happySomeParser = happyThen (happyParse 4# tks) (\x -> happyReturn (let {(HappyWrap17 x') = happyOut17 x} in x'))
 
 pExp3 tks = happySomeParser where
- happySomeParser = happyThen (happyParse 5# tks) (\x -> happyReturn (happyOut18 x))
+ happySomeParser = happyThen (happyParse 5# tks) (\x -> happyReturn (let {(HappyWrap18 x') = happyOut18 x} in x'))
 
 pExp4 tks = happySomeParser where
- happySomeParser = happyThen (happyParse 6# tks) (\x -> happyReturn (happyOut19 x))
+ happySomeParser = happyThen (happyParse 6# tks) (\x -> happyReturn (let {(HappyWrap19 x') = happyOut19 x} in x'))
 
 pExp tks = happySomeParser where
- happySomeParser = happyThen (happyParse 7# tks) (\x -> happyReturn (happyOut20 x))
+ happySomeParser = happyThen (happyParse 7# tks) (\x -> happyReturn (let {(HappyWrap20 x') = happyOut20 x} in x'))
 
 happySeq = happyDontSeq
 
@@ -442,7 +452,19 @@ myLexer = tokens
 
 
 {-# LINE 10 "<command-line>" #-}
-{-# LINE 1 "/tmp/ghc7929_0/ghc_2.h" #-}
+{-# LINE 1 "/tmp/ghc7234_0/ghc_2.h" #-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

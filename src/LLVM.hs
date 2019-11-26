@@ -13,7 +13,8 @@ import LexInstant
 import ParInstant
 
 type CompilerState = (Integer, Map String Integer)
-type LLVMProgram = String
+type LLVMProgram   = DiffList String
+type LLVM          = String
 
 instance Show Calculation where
         show Add = "add"
@@ -45,13 +46,13 @@ compileExp_ name exp1 exp2 = do
         cmd2 <- compileExp exp2
         (countR, _) <- get
         put (next countR, vars)
-        return $ concat [cmd1, cmd2, line [ tmpRegister $ next countR
-                                          , "="
-                                          , show name
-                                          , "i32"
-                                          , tmpRegister countL
-                                          , ","
-                                          , tmpRegister countR]]         
+        return $ cmd1 `mappend` cmd2 `mappend` toDiffList [line [ tmpRegister $ next countR
+                                                          , "="
+                                                          , show name
+                                                          , "i32"
+                                                          , tmpRegister countL
+                                                          , ","
+                                                          , tmpRegister countR]]         
 
 ass :: String -> String -> String
 ass var val = line [ var
@@ -67,28 +68,30 @@ compileExp (ExpDiv exp1 exp2) = compileExp_ Div exp1 exp2
 compileExp (ExpLit int) = do
         (count, vars) <- get
         put (next count, vars)
-        return $ ass (tmpRegister $ next count) $ show int
+        return $ toDiffList [ass (tmpRegister $ next count) $ show int]
 
 compileExp (ExpVar (Ident var)) = do
         (count, vars) <- get
         let (Just countVar) = Map.lookup var vars 
         put (next count, vars)
-        return $ ass (tmpRegister $ next count) $ varRegister var countVar 
+        return $ toDiffList [ass (tmpRegister $ next count) $ varRegister var countVar] 
 
-compileStmt :: Stmt -> State CompilerState LLVMProgram
+compileStmt :: Stmt -> State CompilerState LLVM
 compileStmt (SAss (Ident id) exp) = do
         res <- compileExp exp
         (countExp, vars) <- get
         let countVar = Map.findWithDefault 0 id vars
         put (countExp, Map.insert id (next countVar) vars) 
-        return $ res ++ (ass (varRegister id $ next countVar) $ tmpRegister countExp) 
+        return $ concat [ concat (fromDiffList res)
+                        , ass (varRegister id $ next countVar) $ tmpRegister countExp]
 
 compileStmt (SExp exp) = do
         res <- compileExp exp
         (countExp, _) <- get
-        return $ res ++ (line ["call void @printInt(i32 " ++ (tmpRegister countExp) ++ ")"])
+        return $ concat [ concat (fromDiffList res)
+                        , line ["call void @printInt(i32 " ++ (tmpRegister countExp) ++ ")"]]
 
-compile :: Program -> State CompilerState LLVMProgram
+compile :: Program -> State CompilerState LLVM
 compile (Prog stmts) = do
         prgs <- forM stmts compileStmt
         return $ first ++ (concat prgs) ++ end

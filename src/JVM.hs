@@ -4,7 +4,9 @@ import Data.Map as Map
 
 import AbsInstant
 
-type JVMProgram = String
+type JVMProgram = DiffList String
+type JVM        = String
+
 type CompilerState = Map String Integer
 type DepthStmt = DepthExp 
 data DepthExp = None | DExp { count :: Integer
@@ -72,17 +74,12 @@ compileExp_ c exp1 exp2 (DExp _ d1 d2)
   |  count d1 >= count d2 = do 
          p1 <- compileExp exp1 d1
          p2 <- compileExp exp2 d2
-         return $ concat [ p1
-                         , p2
-                         , line $ show c ]
+         return $ p1 `mappend` p2 `mappend` toDiffList [ line $ show c ]
   |  otherwise = do 
          p1 <- compileExp exp2 d2
          p2 <- compileExp exp1 d1
-         return $ concat [ p1
-                         , p2 
-                         , line "swap"
-                         , line $ show c ]
-
+         return $ p1 `mappend` p2 `mappend` toDiffList [ line "swap"
+                                                       , line $ show c]
 
 mSize :: CompilerState -> Integer
 mSize map = toInteger $ Map.size map
@@ -92,13 +89,13 @@ compileExp (ExpAdd exp1 exp2) dExp  = compileExp_ Add exp1 exp2 dExp
 compileExp (ExpSub exp1 exp2) dExp  = compileExp_ Sub exp1 exp2 dExp
 compileExp (ExpMul exp1 exp2) dExp  = compileExp_ Mul exp1 exp2 dExp
 compileExp (ExpDiv exp1 exp2) dExp  = compileExp_ Div exp1 exp2 dExp
-compileExp (ExpLit int) _           = return $ line $ iconst int
+compileExp (ExpLit int) _           = return (toDiffList [line $ iconst int])
 compileExp (ExpVar (Ident ident)) _ = do 
              vars <- get
              let (Just id) = Map.lookup ident vars
-             return $ line $ iload id 
+             return $ toDiffList [line $ iload id] 
 
-compileStmt :: (Stmt, DepthExp) -> State CompilerState JVMProgram
+compileStmt :: (Stmt, DepthExp) -> State CompilerState JVM
 compileStmt ((SAss (Ident ident) exp), dExp) = do
              prog <- compileExp exp dExp 
              vars <- get
@@ -107,16 +104,13 @@ compileStmt ((SAss (Ident ident) exp), dExp) = do
                     Nothing    -> mSize newVars
                     (Just num) -> num
              put newVars
-             return $ concat [ prog
-                             , line $ istore id]
+             return $ concat $ fromDiffList (prog `mappend` (toDiffList [ line $ istore id ]))
 
 compileStmt ((SExp e), dExp) = do 
              prog <- compileExp e dExp 
-             return $ concat [ streamLine 
-                             , prog
-                             , printLine]  
+             return $ concat $ fromDiffList (streamLine `mappend` prog `mappend` printLine)
 
-compile :: Program -> String -> State CompilerState JVMProgram
+compile :: Program -> String -> State CompilerState JVM
 compile (Prog stmts) file = do
         let dStmts = Prelude.map countStmtDepth stmts
         prgs <- forM (zip stmts dStmts) compileStmt
@@ -147,8 +141,8 @@ classLine name = concat [ ".class public "
                      ,  name
                      , "\n" ]
 
-streamLine = line "getstatic java/lang/System/out Ljava/io/PrintStream;"
-printLine  = line "invokevirtual java/io/PrintStream/println(I)V"
+streamLine = toDiffList [line "getstatic java/lang/System/out Ljava/io/PrintStream;"]
+printLine  = toDiffList [line "invokevirtual java/io/PrintStream/println(I)V"]
 returnLine = line "return"
 end        = ".end method"
 start      = ".super java/lang/Object\n\

@@ -38,7 +38,8 @@
 
 Parser został wygenerowany dzięki narzędziu bnfc 
 oraz gramatyki zdefiniowanej w treści zadania (Instant.cf).
-
+Wykorzystałam listy różnicowe podczas budowania kolejnych linii kodu
+(użyłam implementacji ttp://learnyouahaskell.com/for-a-few-monads-more). 
  
 .₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇..ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑*̑˟̑ෆ.₊̣̇.ෆ˟̑*̑˚̑*̑˟̑
 
